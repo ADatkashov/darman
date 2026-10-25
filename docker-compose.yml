@@ -1,0 +1,43 @@
+# Local development stack: PostgreSQL + DARMAN backend in DEMO mode (fictional data, demo OTP/payments/courier).
+# Copy .env.example to .env first. Never use this file as-is in production.
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: darman
+      POSTGRES_USER: darman
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U darman -d darman"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    ports:
+      - "127.0.0.1:5432:5432"
+
+  backend:
+    build: ./backend
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: ${DARMAN_PROFILE:-demo}
+      DARMAN_DB_URL: jdbc:postgresql://db:5432/darman
+      DARMAN_DB_USER: darman
+      DARMAN_DB_PASSWORD: ${POSTGRES_PASSWORD}
+      DARMAN_JWT_SECRET: ${DARMAN_JWT_SECRET:-}
+      DARMAN_DEMO_PASSWORD: ${DARMAN_DEMO_PASSWORD:-}
+      DARMAN_DEMO_AUTO_REVIEW: ${DARMAN_DEMO_AUTO_REVIEW:-false}
+      DARMAN_PAYMENT_WEBHOOK_SECRET: ${DARMAN_PAYMENT_WEBHOOK_SECRET:-}
+      DARMAN_SMS_GATEWAY_URL: ${DARMAN_SMS_GATEWAY_URL:-}
+      DARMAN_SMS_API_KEY: ${DARMAN_SMS_API_KEY:-}
+    volumes:
+      - rxdata:/data/private-storage
+    ports:
+      - "8080:8080"
+
+volumes:
+  dbdata:
+  rxdata:

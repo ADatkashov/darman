@@ -1,0 +1,100 @@
+spring:
+  application:
+    name: darman-backend
+  datasource:
+    url: ${DARMAN_DB_URL:jdbc:postgresql://localhost:5432/darman}
+    username: ${DARMAN_DB_USER:darman}
+    password: ${DARMAN_DB_PASSWORD:}
+    hikari:
+      maximum-pool-size: ${DARMAN_DB_POOL_SIZE:20}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+  flyway:
+    locations: classpath:db/migration
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 30MB
+  jackson:
+    default-property-inclusion: non_null
+    serialization:
+      write-dates-as-timestamps: false
+  task:
+    scheduling:
+      pool:
+        size: 2
+
+server:
+  port: ${PORT:8080}
+  forward-headers-strategy: framework
+  error:
+    include-message: never
+    include-stacktrace: never
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: never
+
+springdoc:
+  api-docs:
+    enabled: ${DARMAN_API_DOCS_ENABLED:true}
+  swagger-ui:
+    enabled: ${DARMAN_API_DOCS_ENABLED:true}
+
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX,UTC} %-5level [%X{correlationId:-}] %logger{36} - %msg%n"
+
+darman:
+  jwt:
+    # Base64 or plain text secret, at least 32 bytes. Leave empty in development to use an ephemeral random key.
+    secret: ${DARMAN_JWT_SECRET:}
+    issuer: darman
+    access-ttl: 15m
+    refresh-ttl: 30d
+  otp:
+    # "demo" returns the one-time code in the API response and logs (development only). "sms" requires a real provider adapter.
+    provider: ${DARMAN_OTP_PROVIDER:sms}
+    ttl: 5m
+    max-attempts: 5
+    sms:
+      gateway-url: ${DARMAN_SMS_GATEWAY_URL:}
+      api-key: ${DARMAN_SMS_API_KEY:}
+      sender: ${DARMAN_SMS_SENDER:DARMAN}
+  payments:
+    demo-enabled: false
+    webhook-secret: ${DARMAN_PAYMENT_WEBHOOK_SECRET:}
+  storage:
+    private-path: ${DARMAN_STORAGE_PATH:./data/private-storage}
+    max-file-bytes: 10485760
+    max-files-per-prescription: 6
+  demo:
+    enabled: false
+    seed-accounts: false
+    auto-progress: false
+    # Demo-only: automatically 'review' prescriptions. NOT a pharmacist verification. Off unless explicitly enabled.
+    auto-review-prescriptions: ${DARMAN_DEMO_AUTO_REVIEW:false}
+    step-seconds: 45
+    password: ${DARMAN_DEMO_PASSWORD:}
+  cors:
+    allowed-origins: ${DARMAN_CORS_ORIGINS:}
+  legal:
+    # Locale-specific legal copy lives in the mobile app; these are placeholders that must be reviewed before launch.
+    privacy-policy-url: ${DARMAN_PRIVACY_URL:}
+    terms-url: ${DARMAN_TERMS_URL:}
+    support-phone: ${DARMAN_SUPPORT_PHONE:}
+  rate-limit:
+    auth-per-minute: 20

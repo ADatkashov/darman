@@ -1,0 +1,28 @@
+name: Backend
+on:
+  push:
+    paths: ["backend/**", ".github/workflows/backend.yml"]
+  pull_request:
+    paths: ["backend/**", ".github/workflows/backend.yml"]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: gradle
+      - name: Test (Testcontainers starts PostgreSQL via the runner's Docker)
+        run: ./gradlew --no-daemon test
+      - name: Build jar
+        run: ./gradlew --no-daemon bootJar -x test
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: backend-test-reports
+          path: backend/build/reports/tests

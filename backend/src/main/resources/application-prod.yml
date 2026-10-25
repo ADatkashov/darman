@@ -1,0 +1,23 @@
+spring:
+  flyway:
+    locations: classpath:db/migration
+management:
+  endpoint:
+    health:
+      show-details: never
+logging:
+  structured:
+    format:
+      console: ecs
+darman:
+  demo:
+    enabled: false
+    seed-accounts: false
+    auto-progress: false
+  payments:
+    demo-enabled: false
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false

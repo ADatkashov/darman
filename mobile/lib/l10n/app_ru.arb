@@ -1,0 +1,742 @@
+{
+  "@@locale": "ru",
+  "appName": "DARMAN",
+  "slogan": "Здоровье рядом",
+  "retry": "Повторить",
+  "cancel": "Отмена",
+  "save": "Сохранить",
+  "delete": "Удалить",
+  "edit": "Изменить",
+  "close": "Закрыть",
+  "ok": "Понятно",
+  "continueAction": "Продолжить",
+  "back": "Назад",
+  "skip": "Пропустить",
+  "next": "Далее",
+  "getStarted": "Начать",
+  "apply": "Применить",
+  "reset": "Сбросить",
+  "seeAll": "Смотреть все",
+  "add": "Добавить",
+  "remove": "Убрать",
+  "confirm": "Подтвердить",
+  "yes": "Да",
+  "no": "Нет",
+  "free": "Бесплатно",
+  "demoBadge": "ДЕМО",
+  "clear": "Очистить",
+  "optional": "необязательно",
+  "required": "Обязательное поле",
+  "currencySymbol": "₸",
+  "offlineBanner": "Нет подключения к интернету",
+  "errNetwork": "Не удаётся подключиться к серверу. Проверьте интернет и повторите.",
+  "errServer": "Ошибка сервера. Попробуйте позже.",
+  "errUnknown": "Что-то пошло не так. Попробуйте ещё раз.",
+  "errNotFound": "Не найдено",
+  "errForbidden": "Недостаточно прав",
+  "errRateLimited": "Слишком много запросов. Подождите минуту.",
+  "errValidation": "Проверьте введённые данные",
+  "errSessionExpired": "Сессия истекла. Войдите снова.",
+  "medicalDisclaimer": "Информация в приложении не заменяет консультацию врача или фармацевта. Перед применением изучите инструкцию и проконсультируйтесь со специалистом.",
+  "demoDataNote": "Демонстрационные данные: товары и аптеки вымышлены.",
+  "demoModeBanner": "Демо-режим: данные вымышлены, оплата и доставка не настоящие",
+  "navHome": "Главная",
+  "navSearch": "Поиск",
+  "navCart": "Корзина",
+  "navOrders": "Заказы",
+  "navProfile": "Профиль",
+  "onb1Title": "Найдите нужное лекарство",
+  "onb1Body": "Ищите по названию, действующему веществу, бренду или дозировке.",
+  "onb2Title": "Сравнивайте цены аптек",
+  "onb2Body": "Смотрите предложения разных аптек, наличие и условия доставки.",
+  "onb3Title": "Рецепт — через фармацевта",
+  "onb3Body": "Загрузите фото рецепта: его проверит фармацевт, где это предусмотрено законом.",
+  "onb4Title": "Доставка и отслеживание",
+  "onb4Body": "Следите за статусом заказа от подтверждения до получения.",
+  "homeSearchHint": "Поиск лекарств и товаров",
+  "homeCategories": "Категории",
+  "homePopular": "Популярные товары",
+  "homeFrequent": "Часто покупают",
+  "homeOffers": "Акции и скидки",
+  "homeNearby": "Аптеки рядом",
+  "homeRecent": "Вы смотрели",
+  "homeRxTitle": "Есть рецепт?",
+  "homeRxBody": "Загрузите фото — фармацевт проверит рецепт",
+  "homeRxAction": "Загрузить рецепт",
+  "homeDeliveryInfo": "Доставка по Алматы · ориентировочно {min}–{max} мин",
+  "@homeDeliveryInfo": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "homeCity": "Город",
+  "homeCitySoon": "Другие города скоро появятся",
+  "promoCodeBanner": "Промокод {code}",
+  "@promoCodeBanner": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "emptySection": "Пока ничего нет",
+  "searchTitle": "Поиск",
+  "searchHint": "Название, вещество, бренд…",
+  "searchRecent": "Недавние запросы",
+  "searchClearHistory": "Очистить историю",
+  "searchSuggestions": "Подсказки",
+  "searchFoundCount": "{count, plural, one{Найден {count} товар} few{Найдено {count} товара} many{Найдено {count} товаров} other{Найдено {count} товара}}",
+  "@searchFoundCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "searchNoResultsTitle": "Ничего не найдено",
+  "searchNoResultsBody": "Проверьте написание или поищите по действующему веществу. Мы не подставляем похожие, но другие товары.",
+  "searchBrowseCategories": "Посмотреть категории",
+  "sortLabel": "Сортировка",
+  "sortRelevance": "По релевантности",
+  "sortPriceAsc": "Сначала дешёвые",
+  "sortPriceDesc": "Сначала дорогие",
+  "sortPopularity": "По популярности",
+  "filters": "Фильтры",
+  "filterCategory": "Категория",
+  "filterManufacturer": "Производитель",
+  "filterAll": "Все",
+  "filterInStock": "Только в наличии",
+  "filterPrice": "Цена, ₸",
+  "filterPriceFrom": "От",
+  "filterPriceTo": "До",
+  "filterRx": "Рецептурные",
+  "filterRxAny": "Любые",
+  "filterRxOnly": "Только по рецепту",
+  "filterRxNone": "Без рецепта",
+  "loadMore": "Загрузить ещё",
+  "searchClearSemantic": "Очистить поиск",
+  "productTitle": "Товар",
+  "prodBrand": "Бренд",
+  "prodIngredient": "Действующее вещество",
+  "prodStrength": "Дозировка",
+  "prodForm": "Форма выпуска",
+  "prodPackage": "Упаковка",
+  "prodManufacturer": "Производитель",
+  "prodDescription": "Описание",
+  "prodUsage": "Способ применения",
+  "prodStorage": "Условия хранения",
+  "prodWarnings": "Предупреждения",
+  "prodContraindications": "Противопоказания",
+  "prodComposition": "Состав",
+  "prodInfoUnavailable": "Официальная инструкция недоступна. Изучите инструкцию в упаковке и проконсультируйтесь со специалистом.",
+  "prodInfoSource": "Источник: {source}",
+  "@prodInfoSource": {
+    "placeholders": {
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "badgeRx": "По рецепту",
+  "badgeOtc": "Без рецепта",
+  "rxNeededNote": "Для заказа нужен одобренный фармацевтом рецепт.",
+  "offersTitle": "Предложения аптек",
+  "offersBestPrice": "Лучшая цена",
+  "offersNone": "Сейчас нет предложений в вашем городе",
+  "offerPickup": "Самовывоз",
+  "offerDelivery": "Доставка",
+  "offerNoDelivery": "Без доставки",
+  "offerDeliveryFee": "Доставка {fee}",
+  "@offerDeliveryFee": {
+    "placeholders": {
+      "fee": {
+        "type": "String"
+      }
+    }
+  },
+  "offerFreeFrom": "бесплатно от {amount}",
+  "@offerFreeFrom": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "offerEta": "≈ {min}–{max} мин (оценка)",
+  "@offerEta": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "offerUpdated": "Обновлено {time}",
+  "@offerUpdated": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "stockIn": "В наличии",
+  "stockLow": "Мало",
+  "stockOut": "Нет в наличии",
+  "stockCount": "В наличии: {count} шт.",
+  "@stockCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "addToCart": "В корзину",
+  "addedToCart": "Добавлено в корзину",
+  "viewCart": "Открыть",
+  "favoriteAdd": "Добавить в избранное",
+  "favoriteRemove": "Убрать из избранного",
+  "selectOffer": "Выбрать",
+  "offerSelected": "Выбрано",
+  "priceFrom": "от {price}",
+  "@priceFrom": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "quantityDecrease": "Уменьшить количество",
+  "quantityIncrease": "Увеличить количество",
+  "quantityLabel": "Количество: {count}",
+  "@quantityLabel": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "unavailableOffer": "Предложение недоступно",
+  "pharmacyDemoNote": "Вымышленная аптека (демо)",
+  "licenseNotVerified": "Лицензия не проверена (демо-данные)",
+  "cartTitle": "Корзина",
+  "cartEmptyTitle": "В корзине пока пусто",
+  "cartEmptyBody": "Найдите нужные товары в каталоге и добавьте их в корзину",
+  "goToCatalog": "Перейти в каталог",
+  "cartItems": "{count, plural, one{{count} товар} few{{count} товара} many{{count} товаров} other{{count} товара}}",
+  "@cartItems": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "cartPharmacy": "Аптека: {name}",
+  "@cartPharmacy": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "cartPromo": "Промокод",
+  "cartPromoHint": "Введите промокод",
+  "cartPromoApplied": "Промокод применён: −{amount}",
+  "@cartPromoApplied": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "cartPromoInvalid": "Промокод не подходит",
+  "cartPromoMin": "Минимальная сумма заказа для промокода не достигнута",
+  "cartSubtotal": "Товары",
+  "cartDelivery": "Доставка",
+  "cartDiscount": "Скидка",
+  "cartTotal": "Итого",
+  "cartCheckout": "Оформить заказ",
+  "cartClear": "Очистить корзину",
+  "cartClearConfirm": "Удалить все товары из корзины?",
+  "cartBranchMismatchTitle": "Товары из другой аптеки",
+  "cartBranchMismatchBody": "Заказ выполняет одна аптека. В корзине уже есть товары из «{name}». Заменить корзину?",
+  "@cartBranchMismatchBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "cartReplace": "Заменить",
+  "cartKeep": "Оставить",
+  "cartIssuePrice": "Цена изменилась: было {old}, стало {now}",
+  "@cartIssuePrice": {
+    "placeholders": {
+      "old": {
+        "type": "String"
+      },
+      "now": {
+        "type": "String"
+      }
+    }
+  },
+  "cartIssueOut": "Нет в наличии",
+  "cartIssueLow": "Доступно только {count} шт.",
+  "@cartIssueLow": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "cartIssueUnavailable": "Предложение больше недоступно",
+  "cartFixIssues": "Уберите недоступные товары или измените количество",
+  "cartCheckFailed": "Не удалось проверить наличие и цены. Они будут перепроверены при оформлении.",
+  "cartRxNeeded": "В корзине есть рецептурные товары — для заказа нужен одобренный рецепт",
+  "cartFreeDeliveryFrom": "Бесплатная доставка от {amount}",
+  "@cartFreeDeliveryFrom": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "cartDeliveryUnavailable": "Эта аптека не доставляет — доступен самовывоз",
+  "cartRemoveItem": "Удалить {name} из корзины",
+  "@cartRemoveItem": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "checkoutTitle": "Оформление заказа",
+  "coContact": "Контакты",
+  "coName": "Имя получателя",
+  "coPhone": "Телефон",
+  "coFulfillment": "Способ получения",
+  "coDelivery": "Доставка",
+  "coPickup": "Самовывоз",
+  "coPickupFrom": "Заберите в аптеке: {address}",
+  "@coPickupFrom": {
+    "placeholders": {
+      "address": {
+        "type": "String"
+      }
+    }
+  },
+  "coAddress": "Адрес доставки",
+  "coChooseAddress": "Выберите адрес",
+  "coAddAddress": "Добавить адрес",
+  "coNotes": "Комментарий для курьера",
+  "coSlot": "Время доставки",
+  "coAsap": "Как можно скорее · ≈ {min}–{max} мин (оценка)",
+  "@coAsap": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "coSlotToday": "Сегодня",
+  "coSlotTomorrow": "Завтра",
+  "coPayment": "Оплата",
+  "coPayCash": "Наличными при получении",
+  "coPayCard": "Банковской картой онлайн",
+  "coPayCardDemo": "Картой онлайн — ДЕМО (деньги не списываются)",
+  "coPayCardUnavailable": "Онлайн-оплата сейчас недоступна",
+  "coRxSection": "Рецепт",
+  "coRxChoose": "Выберите одобренный рецепт",
+  "coRxNone": "Нет одобренных рецептов. Загрузите рецепт и дождитесь проверки фармацевтом.",
+  "coRxUpload": "Загрузить рецепт",
+  "coRxLine": "Рецепт от {date}",
+  "@coRxLine": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "coConsent": "Я согласен(на) с Политикой конфиденциальности и Условиями использования",
+  "coConsentRequired": "Необходимо согласие для оформления заказа",
+  "coPlaceOrder": "Оформить заказ · {total}",
+  "@coPlaceOrder": {
+    "placeholders": {
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "coPlacing": "Оформляем…",
+  "coSummary": "Ваш заказ",
+  "coPriceChangedTitle": "Цены изменились",
+  "coPriceChangedBody": "Пока вы оформляли заказ, цены или наличие изменились. Проверьте корзину и повторите.",
+  "coDoneTitle": "Заказ оформлен",
+  "coDoneBody": "Номер заказа: {number}",
+  "@coDoneBody": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "coDoneDemo": "Демо-заказ: настоящая оплата и доставка не выполняются",
+  "coViewOrder": "Следить за заказом",
+  "coBackHome": "На главную",
+  "coLoginRequired": "Войдите, чтобы оформить заказ",
+  "errPrescriptionRequired": "Для этих товаров нужен одобренный рецепт",
+  "errPrescriptionNotApproved": "Рецепт ещё не одобрен или срок его действия истёк",
+  "errPrescriptionUsed": "Этот рецепт уже использован в другом заказе",
+  "errInsufficientStock": "Недостаточно товара в наличии",
+  "errOfferUnavailable": "Один из товаров больше недоступен",
+  "errMixedBranches": "Товары должны быть из одной аптеки",
+  "errDeliveryUnavailable": "Эта аптека не доставляет",
+  "errSlotInvalid": "Выбранное время доставки больше недоступно",
+  "errAddressRequired": "Укажите адрес доставки",
+  "errPaymentUnavailable": "Онлайн-оплата недоступна. Выберите оплату при получении.",
+  "errPaymentFailed": "Платёж отклонён",
+  "errPhoneInvalid": "Введите номер в формате +7 XXX XXX XX XX",
+  "errCancelNotAllowed": "Заказ уже нельзя отменить",
+  "ordersTitle": "Мои заказы",
+  "ordersActive": "Текущие",
+  "ordersHistory": "История",
+  "ordersEmptyActive": "Нет текущих заказов",
+  "ordersEmptyHistory": "История заказов пуста",
+  "ordersGuestTitle": "Войдите, чтобы видеть заказы",
+  "ordersGuestBody": "Здесь появятся ваши заказы и их статусы",
+  "orderNumber": "Заказ № {number}",
+  "@orderNumber": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "orderDetails": "Детали заказа",
+  "orderDelivery": "Доставка",
+  "orderTracking": "Отслеживание",
+  "statusPlaced": "Заказ оформлен",
+  "statusConfirmed": "Подтверждён",
+  "statusPreparing": "Собирается",
+  "statusReadyForPickup": "Готов к выдаче",
+  "statusInTransit": "В пути",
+  "statusDelivered": "Доставлен",
+  "statusDeliveredPickup": "Выдан",
+  "statusCancelled": "Отменён",
+  "statusInTransitHint": "Курьер направляется к вам",
+  "statusPreparingHint": "Аптека собирает ваш заказ",
+  "orderWindow": "Окно доставки",
+  "orderEtaEstimate": "Ориентировочно {from}–{to}",
+  "@orderEtaEstimate": {
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "orderAddress": "Адрес доставки",
+  "orderPickupAddress": "Пункт выдачи",
+  "orderCourier": "Курьер",
+  "orderCourierDemo": "Демо-курьер (вымышленный)",
+  "orderCall": "Позвонить",
+  "orderNoCourier": "Курьер будет назначен перед отправкой",
+  "orderItems": "Состав заказа",
+  "orderSupport": "Поддержка",
+  "orderSupportBody": "Нужна помощь с заказом? Свяжитесь с аптекой или поддержкой.",
+  "orderContactPharmacy": "Связаться с аптекой",
+  "orderCancel": "Отменить заказ",
+  "orderCancelConfirm": "Отменить этот заказ? Товары вернутся на склад.",
+  "orderCancelled": "Заказ отменён",
+  "orderReceipt": "Квитанция",
+  "orderReceiptNotice": "Это справка о заказе, а не фискальный чек.",
+  "orderReorder": "Повторить заказ",
+  "orderReorderDone": "{added, plural, one{Добавлен {added} товар} few{Добавлено {added} товара} many{Добавлено {added} товаров} other{Добавлено {added} товара}} в корзину",
+  "@orderReorderDone": {
+    "placeholders": {
+      "added": {
+        "type": "int"
+      }
+    }
+  },
+  "orderReorderSkipped": "Часть товаров недоступна и не добавлена: {count}",
+  "@orderReorderSkipped": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "orderReorderChanged": "Цены или количество изменились — проверьте корзину",
+  "orderHistoryTitle": "История статусов",
+  "payUnpaid": "Оплата при получении",
+  "payPending": "Ожидает оплаты",
+  "payPaid": "Оплачено",
+  "payDemoPaid": "Демо-оплата (деньги не списаны)",
+  "payFailed": "Платёж не прошёл",
+  "payRefundPending": "Возврат в обработке",
+  "payRefunded": "Возвращено",
+  "orderPayment": "Оплата",
+  "orderFulfillmentDelivery": "Доставка",
+  "orderFulfillmentPickup": "Самовывоз",
+  "orderSimulatedNote": "Статусы демо-заказов меняются автоматически для демонстрации. Реальный курьер и GPS не подключены.",
+  "rxTitle": "Рецепты",
+  "rxUploadTitle": "Загрузка рецепта",
+  "rxUploadHint": "Поддерживаются фото и PDF (JPG, PNG, PDF) до {size} МБ",
+  "@rxUploadHint": {
+    "placeholders": {
+      "size": {
+        "type": "int"
+      }
+    }
+  },
+  "rxLegal": "Рецепт проверяет фармацевт. Загрузка файла не означает одобрения.",
+  "rxTakePhoto": "Сфотографировать",
+  "rxGallery": "Из галереи",
+  "rxPdf": "Выбрать PDF",
+  "rxAddMore": "Добавить ещё",
+  "rxNote": "Комментарий (необязательно)",
+  "rxSubmit": "Отправить на проверку",
+  "rxUploading": "Загрузка {percent}%",
+  "@rxUploading": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "rxSubmittedOk": "Рецепт отправлен на проверку",
+  "rxStatusDraft": "Черновик",
+  "rxStatusSubmitted": "Отправлен",
+  "rxStatusUnderReview": "На проверке",
+  "rxStatusApproved": "Одобрен",
+  "rxStatusRejected": "Отклонён",
+  "rxStatusExpired": "Срок истёк",
+  "rxRejectionReason": "Причина отказа: {reason}",
+  "@rxRejectionReason": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "rxValidUntil": "Действителен до {date}",
+  "@rxValidUntil": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "rxHistory": "Мои рецепты",
+  "rxEmpty": "Вы ещё не загружали рецепты",
+  "rxFilesCount": "{count, plural, one{{count} файл} few{{count} файла} many{{count} файлов} other{{count} файла}}",
+  "@rxFilesCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "rxTooLarge": "Файл больше {size} МБ",
+  "@rxTooLarge": {
+    "placeholders": {
+      "size": {
+        "type": "int"
+      }
+    }
+  },
+  "rxBadType": "Допустимы только JPG, PNG и PDF",
+  "rxMaxFiles": "Не более {count} файлов",
+  "@rxMaxFiles": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "rxNoFiles": "Добавьте хотя бы один файл",
+  "rxDemoReview": "Демо-проверка: это не проверка настоящим фармацевтом",
+  "rxTimeline": "Ход проверки",
+  "rxEventCreated": "Черновик создан",
+  "rxEventSubmitted": "Отправлен на проверку",
+  "rxEventReviewStarted": "Проверка началась",
+  "rxEventApproved": "Рецепт одобрен",
+  "rxEventRejected": "Рецепт отклонён",
+  "rxEventExpired": "Срок действия истёк",
+  "rxUsable": "Можно использовать в заказе",
+  "rxDeleteDraft": "Удалить черновик",
+  "rxLoginRequired": "Войдите, чтобы загрузить рецепт",
+  "rxFileRemove": "Убрать файл",
+  "rxNewShort": "Новый рецепт",
+  "loginTitle": "Вход",
+  "loginSubtitle": "Войдите по номеру телефона",
+  "registerTitle": "Регистрация",
+  "registerSubtitle": "Подтвердим номер по коду",
+  "authPhone": "Номер телефона",
+  "authPassword": "Пароль",
+  "authPasswordHint": "Не менее 8 символов, буквы и цифры",
+  "authFullName": "Имя",
+  "authConsent": "Я принимаю Политику конфиденциальности и согласен на обработку персональных данных",
+  "authConsentRequired": "Необходимо согласие на обработку данных",
+  "authLoginAction": "Войти",
+  "authRegisterAction": "Зарегистрироваться",
+  "authNoAccount": "Нет аккаунта? Зарегистрируйтесь",
+  "authHaveAccount": "Уже есть аккаунт? Войдите",
+  "authContinueGuest": "Продолжить без входа",
+  "otpTitle": "Подтверждение номера",
+  "otpBody": "Введите код, отправленный на {phone}",
+  "@otpBody": {
+    "placeholders": {
+      "phone": {
+        "type": "String"
+      }
+    }
+  },
+  "otpDemoNote": "ДЕМО: код {code}. В рабочем режиме код приходит по SMS.",
+  "@otpDemoNote": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "otpResend": "Отправить код ещё раз",
+  "otpResendIn": "Повторно через {seconds} с",
+  "@otpResendIn": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "otpVerify": "Подтвердить",
+  "otpCode": "Код из SMS",
+  "errInvalidCredentials": "Неверный телефон или пароль",
+  "errPhoneNotVerified": "Номер не подтверждён. Завершите регистрацию.",
+  "errPhoneExists": "Этот номер уже зарегистрирован",
+  "errWeakPassword": "Пароль должен содержать буквы и цифры (от 8 символов)",
+  "errOtpInvalid": "Неверный или просроченный код",
+  "errOtpTooSoon": "Код уже отправлен. Подождите немного.",
+  "errOtpUnavailable": "Сервис SMS-подтверждения сейчас недоступен",
+  "errAccountDisabled": "Аккаунт отключён",
+  "passwordShow": "Показать пароль",
+  "passwordHide": "Скрыть пароль",
+  "profileTitle": "Профиль",
+  "profileGuestTitle": "Добро пожаловать в DARMAN",
+  "profileGuestBody": "Войдите, чтобы оформлять заказы, сохранять адреса и рецепты",
+  "profileLoginRegister": "Войти или зарегистрироваться",
+  "profileMyOrders": "Мои заказы",
+  "profileRx": "Рецепты",
+  "profileAddresses": "Адреса доставки",
+  "profileFavorites": "Избранное",
+  "profileNotifications": "Уведомления",
+  "profileLanguage": "Язык",
+  "profilePrivacy": "Политика конфиденциальности",
+  "profileTerms": "Условия использования",
+  "profileHelp": "Помощь и поддержка",
+  "profileLogout": "Выйти",
+  "profileLogoutConfirm": "Выйти из аккаунта?",
+  "profileDelete": "Удалить аккаунт",
+  "profileDeleteBody": "Мы примем запрос на удаление аккаунта и персональных данных. Заказы, которые нужно хранить по закону, могут сохраняться в обезличенном виде. Запрос можно отменить.",
+  "profileDeleteRequested": "Запрос на удаление отправлен",
+  "profileDeletePending": "Запрошено удаление аккаунта",
+  "profileDeleteCancel": "Отменить запрос на удаление",
+  "profileEdit": "Личные данные",
+  "profileFullName": "Имя",
+  "profileEmail": "Электронная почта",
+  "profileEmailInvalid": "Некорректный email",
+  "profileSaved": "Сохранено",
+  "notifSettings": "Настройки уведомлений",
+  "notifOrders": "Статусы заказов",
+  "notifPrescriptions": "Проверка рецептов",
+  "notifPromotions": "Акции и предложения",
+  "notifInbox": "Центр уведомлений",
+  "notifEmpty": "Уведомлений пока нет",
+  "notifRxApproved": "Рецепт одобрен",
+  "notifRxRejected": "Рецепт отклонён",
+  "notifRxReview": "Рецепт проверяется",
+  "notifOrderPlaced": "Заказ оформлен",
+  "notifOrderUpdate": "Статус заказа изменился",
+  "notifOrderCancelled": "Заказ отменён",
+  "appVersion": "Версия {version}",
+  "@appVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "languageTitle": "Язык приложения",
+  "languageRu": "Русский",
+  "languageKk": "Қазақша",
+  "languageEn": "English",
+  "favoritesTitle": "Избранное",
+  "favoritesEmpty": "В избранном пока пусто",
+  "favoritesEmptyBody": "Нажмите на сердечко у товара, чтобы сохранить его",
+  "favoritesGuestNote": "Избранное хранится на устройстве. Войдите, чтобы сохранить его в аккаунте.",
+  "addressesTitle": "Адреса доставки",
+  "addressesEmpty": "Адресов пока нет",
+  "addressAdd": "Добавить адрес",
+  "addressEdit": "Изменить адрес",
+  "addressLabel": "Название (Дом, Работа…)",
+  "addressCity": "Город",
+  "addressStreet": "Улица",
+  "addressHouse": "Дом",
+  "addressApartment": "Квартира",
+  "addressEntrance": "Подъезд",
+  "addressFloor": "Этаж",
+  "addressComment": "Комментарий",
+  "addressDefault": "Основной адрес",
+  "addressDefaultBadge": "Основной",
+  "addressDeleteConfirm": "Удалить этот адрес?",
+  "pharmaciesTitle": "Аптеки",
+  "pharmacyHours": "Часы работы: {hours}",
+  "@pharmacyHours": {
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "pharmacyDistance": "{km} км",
+  "@pharmacyDistance": {
+    "placeholders": {
+      "km": {
+        "type": "String"
+      }
+    }
+  },
+  "pharmacyDelivers": "Есть доставка",
+  "pharmacyPickupOnly": "Только самовывоз",
+  "pharmacyCall": "Позвонить в аптеку",
+  "pharmacyProducts": "Товары аптеки",
+  "legalDraftNote": "Черновик текста. Перед запуском требует проверки юристом и профильными специалистами.",
+  "privacyBody": "DARMAN обрабатывает номер телефона, имя, адреса доставки, историю заказов и, по вашему желанию, фотографии рецептов — только для оформления и выполнения заказов, проверки рецептов фармацевтом и поддержки. Файлы рецептов хранятся в закрытом хранилище, доступ к ним имеют вы и уполномоченный фармацевт, каждое обращение фиксируется. Вы можете в любой момент запросить удаление аккаунта и данных в разделе «Профиль». Мы не продаём персональные данные.",
+  "termsBody": "DARMAN — сервис для поиска товаров и оформления заказов в аптеках-партнёрах. Рецептурные товары отпускаются только после проверки рецепта фармацевтом. Информация в приложении носит справочный характер и не заменяет консультацию специалиста. Наличие, цены и сроки доставки определяются аптекой; указанное время доставки является ориентировочным. Отмена заказа возможна, пока аптека не начала его сборку.",
+  "helpTitle": "Помощь и поддержка",
+  "helpFaqRxQ": "Как заказать рецептурное лекарство?",
+  "helpFaqRxA": "Загрузите фото рецепта в разделе «Рецепты». После одобрения фармацевтом выберите его при оформлении заказа.",
+  "helpFaqDeliveryQ": "Как работает доставка?",
+  "helpFaqDeliveryA": "Заказ выполняет одна аптека. Время доставки ориентировочное; статус обновляется по мере сборки и передачи курьеру.",
+  "helpFaqPayQ": "Как оплатить заказ?",
+  "helpFaqPayA": "Доступна оплата при получении. Онлайн-оплата картой появится после подключения платёжного провайдера; в демо-режиме деньги не списываются.",
+  "helpContact": "Связаться с поддержкой",
+  "helpNoPhone": "Контакты поддержки пока не настроены",
+  "helpEmergency": "При угрозе жизни немедленно звоните 103.",
+  "themeTitle": "Оформление",
+  "themeLight": "Светлая",
+  "themeDark": "Тёмная",
+  "themeSystem": "Как в системе"
+}

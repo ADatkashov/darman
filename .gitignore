@@ -1,0 +1,21 @@
+# Build outputs
+build/
+.gradle/
+*.class
+*.log
+# IDE
+.idea/
+*.iml
+.vscode/
+# Secrets & local data
+.env
+.env.*
+!.env.example
+backend/data/
+# Flutter
+mobile/.dart_tool/
+mobile/.flutter-plugins
+mobile/.flutter-plugins-dependencies
+mobile/build/
+mobile/.packages
+mobile/pubspec.lock.bak
