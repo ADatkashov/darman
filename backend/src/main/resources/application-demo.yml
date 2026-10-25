@@ -1,0 +1,13 @@
+# Demo profile: seeded fictional data, demo OTP, demo payments and simulated courier. NEVER use in production.
+spring:
+  flyway:
+    locations: classpath:db/migration,classpath:db/demo
+darman:
+  otp:
+    provider: demo
+  payments:
+    demo-enabled: true
+  demo:
+    enabled: true
+    seed-accounts: true
+    auto-progress: true

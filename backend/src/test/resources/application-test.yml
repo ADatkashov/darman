@@ -1,0 +1,22 @@
+spring:
+  flyway:
+    locations: classpath:db/migration,classpath:db/demo
+darman:
+  jwt:
+    secret: test-secret-test-secret-test-secret-123456
+  otp:
+    provider: demo
+  payments:
+    demo-enabled: true
+    webhook-secret: test-webhook-secret-123456
+  demo:
+    enabled: true
+    seed-accounts: true
+    auto-progress: false
+    auto-review-prescriptions: false
+    password: Test-Passw0rd-Demo
+  rate-limit:
+    auth-per-minute: 100000
+logging:
+  level:
+    kz.darman.identity.DemoOtpProvider: ERROR

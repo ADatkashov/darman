@@ -1,0 +1,10 @@
+# 7. Design system and screens
+
+**Tokens** (`mobile/lib/core/theme/colors.dart`): emerald #17865B, deep green #126B49, mint #43C6AE, soft mint #EAF8F2, pale aqua #F0FBF8, text #17352D, divider #E4ECE8, warning #E5A23C, error #D94F52, success #24875B.
+`textSecondary` is #5F6F69 (the brand grey #71817B darkened to reach WCAG AA 4.5:1 on white). 8-pt spacing (`Sp`), radii 12–20, pill buttons (52 px), hairline-border cards, restrained shadows. Light theme default; dark theme selectable (Profile → Appearance).
+**Components**: `DmCard`, `Pill`, `ProductTile`/`ProductRow`, `PriceText`, `StockPill`, `QuantityStepper`, `CategoryTile`, `InfoPanel`, `Skeleton*`, `EmptyState`/`ErrorState`, `OfflineBanner`, `DemoBanner`, `PhoneField`/`PasswordField`, `OrderTimeline`.
+**Brand**: `DarmanSymbol`/`DarmanLogo` (vector cross + leaf; also generated launcher icon), `BotanicalDecor` leaves. Product art is drawn locally (`ProductImage`/`PackPainter`) — no third-party image hosts.
+
+**Screens**: Splash · Onboarding (4 pages, skippable, language menu) · Login/Register/OTP · Home (city, search, promo banners, categories, Rx entry, delivery info, popular/offers/frequent shelves, nearby pharmacies, recently viewed) · Search (debounce 350 ms, suggestions, recents, filters sheet, sort, infinite scroll, no-results) · Product (offers comparison, info table, official info / "unavailable", disclaimers, sticky add-to-cart) · Cart · Checkout · Order done · Orders (current/history) · Order detail (timeline, courier, items, cancel, reorder, receipt, support) · Prescriptions (list/new/detail) · Profile, edit, addresses, favorites, notifications, language, theme, legal, help, pharmacies.
+**Navigation**: bottom bar Home/Search/Cart(badge)/Orders/Profile on a `StatefulShellRoute`; Android back from another tab returns to Home first; protected routes redirect guests to login and return afterwards.
+**States**: skeleton loading, empty, error with retry, offline banner (driven by request reachability), pull-to-refresh. **Accessibility**: semantic labels/tooltips on icon buttons, live regions for errors, 44–48 px targets, reduced-motion aware skeletons, localized labels.
