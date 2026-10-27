@@ -7,6 +7,10 @@ spring:
     password: ${DARMAN_DB_PASSWORD:}
     hikari:
       maximum-pool-size: ${DARMAN_DB_POOL_SIZE:20}
+      # Serverless Postgres (Neon) closes idle connections: keep max-lifetime below its idle cut-off and allow for cold starts.
+      connection-timeout: ${DARMAN_DB_CONNECT_TIMEOUT_MS:30000}
+      max-lifetime: ${DARMAN_DB_MAX_LIFETIME_MS:1800000}
+      minimum-idle: ${DARMAN_DB_MIN_IDLE:2}
   jpa:
     open-in-view: false
     hibernate:

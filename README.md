@@ -59,7 +59,7 @@ cd mobile && flutter analyze && flutter test
 
 ## Documentation
 - [openspec/](openspec/) — product overview, requirements, roles, journeys, architecture, contracts, design system, security, prescription workflow, order lifecycle, testing, deployment
-- [docs/architecture.md](docs/architecture.md) · [docs/demo-mode.md](docs/demo-mode.md) · [docs/integrations.md](docs/integrations.md)
+- [docs/architecture.md](docs/architecture.md) · [docs/demo-mode.md](docs/demo-mode.md) · [docs/integrations.md](docs/integrations.md) · [docs/deploy-render-neon.md](docs/deploy-render-neon.md) (Render + Neon)
 
 ## Not a medical service
 The app provides catalog and ordering functionality only. It gives no diagnosis, dosage or treatment advice; product instructions appear only
