@@ -57,6 +57,10 @@ cd backend && ./gradlew test
 cd mobile && flutter analyze && flutter test
 ```
 
+## Screenshots
+
+Мобильное приложение и staff-панель в демо-режиме: [docs/screenshots](docs/screenshots/README.md).
+
 ## Documentation
 - [openspec/](openspec/) — product overview, requirements, roles, journeys, architecture, contracts, design system, security, prescription workflow, order lifecycle, testing, deployment
 - [docs/architecture.md](docs/architecture.md) · [docs/demo-mode.md](docs/demo-mode.md) · [docs/integrations.md](docs/integrations.md)
