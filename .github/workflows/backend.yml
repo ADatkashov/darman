@@ -4,9 +4,30 @@ on:
     paths: ["backend/**", ".github/workflows/backend.yml"]
   pull_request:
     paths: ["backend/**", ".github/workflows/backend.yml"]
+
+concurrency:
+  group: backend-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
-    runs-on: ubuntu-latest
+    # Repo variable CI_RUNS_ON switches to a self-hosted runner, e.g. ["self-hosted","linux"]
+    # (docs/CI.md "Self-hosted runner"); unset = GitHub-hosted.
+    runs-on: ${{ fromJSON(vars.CI_RUNS_ON || '"ubuntu-latest"') }}
+    # Never run fork code on a self-hosted runner.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    services:
+      postgres:
+        # Debian image: UTF-8 locale, needed for Cyrillic case-folding in search.
+        image: postgres:16
+        env:
+          POSTGRES_DB: darman_test
+          POSTGRES_USER: darman
+          POSTGRES_PASSWORD: darman
+        ports: ["5432"]  # random host port: a persistent runner may already use 5432
+        options: >-
+          --health-cmd "pg_isready -U darman -d darman_test"
+          --health-interval 5s --health-timeout 3s --health-retries 10
     defaults:
       run:
         working-directory: backend
@@ -16,8 +37,14 @@ jobs:
         with:
           distribution: temurin
           java-version: "21"
-          cache: gradle
-      - name: Test (Testcontainers starts PostgreSQL via the runner's Docker)
+          # Self-hosted runners keep ~/.gradle on disk; skip the cloud cache (Actions storage quota).
+          cache: ${{ vars.CI_RUNS_ON == '' && 'gradle' || '' }}
+      # Integration tests use this database instead of starting Testcontainers (IntegrationTest.java).
+      - name: Test
+        env:
+          DARMAN_TEST_DB_URL: jdbc:postgresql://localhost:${{ job.services.postgres.ports['5432'] }}/darman_test
+          DARMAN_TEST_DB_USER: darman
+          DARMAN_TEST_DB_PASSWORD: darman
         run: ./gradlew --no-daemon test
       - name: Build jar
         run: ./gradlew --no-daemon bootJar -x test
@@ -26,3 +53,4 @@ jobs:
         with:
           name: backend-test-reports
           path: backend/build/reports/tests
+          retention-days: 3
