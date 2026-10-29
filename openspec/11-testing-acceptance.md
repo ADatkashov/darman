@@ -8,5 +8,8 @@
 ## Manual acceptance checklist
 Onboarding skip · switch language and restart (persists) · search "ibuprofen" / "ибупрофен" / no-match state · compare offers · add from another pharmacy (replace dialog) · kill/restart app (cart persists) · guest checkout → login → order (demo card shows DEMO) · watch tracking advance · cancel a PLACED order · upload a prescription, approve in `/admin`, order an Rx item · customer cannot open `/api/v1/admin/*` · airplane mode shows offline banner.
 
+## Verified on a running stack (2026-10-29)
+Demo backend + PostgreSQL 16 + Flutter web build (`--no-web-resources-cdn`): all screens were walked through in a browser (screenshots in `docs/screenshots`, 52 mobile + 8 staff panel), in ru / kk / en and in the dark theme; `test/live_contract_test.dart` passes against the live backend; authorization checked over HTTP (customer → `/api/v1/admin/*` 403, no token 401, pharmacist 200); placing, tracking and reorder verified in the UI.
+
 ## Known verification gaps
-Android/iOS binaries were **not built** here (no Android SDK/Xcode); visuals were not reviewed on a device; Docker image/compose were not executed (no Docker daemon); accessibility audit with TalkBack/VoiceOver not done.
+Android/iOS binaries were **not built** (no Android SDK/Xcode: `dl.google.com` is not reachable from the cloud environment, so the SDK cannot be downloaded there); visuals were reviewed only in a browser (390×844), not on a device; Docker image/compose were not executed (no Docker daemon in the cloud environment; CI covers the backend through a PostgreSQL service container); accessibility audit with TalkBack/VoiceOver not done; offline banner not re-checked in the browser.

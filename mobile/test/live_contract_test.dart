@@ -87,8 +87,9 @@ void main() {
     expect((await orders.reorder(order.id)).lines, isNotEmpty);
     expect((await users.notifications()), isNotEmpty);
     await users.addFavorite(card.id);
-    expect((await users.favorites()).single.id, card.id);
+    expect((await users.favorites()).any((f) => f.id == card.id), isTrue);
     await users.removeFavorite(card.id);
+    expect((await users.favorites()).any((f) => f.id == card.id), isFalse);
 
     // prescription upload round trip
     final rx = PrescriptionRepository(api);
