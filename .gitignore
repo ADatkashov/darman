@@ -19,3 +19,6 @@ mobile/.flutter-plugins-dependencies
 mobile/build/
 mobile/.packages
 mobile/pubspec.lock.bak
+
+# Local APK builds (scripts/build-apk-local.sh)
+/build-apk-out/
