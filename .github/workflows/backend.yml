@@ -4,9 +4,23 @@ on:
     paths: ["backend/**", ".github/workflows/backend.yml"]
   pull_request:
     paths: ["backend/**", ".github/workflows/backend.yml"]
+  workflow_dispatch:
+
+concurrency:
+  group: backend-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
 jobs:
   test:
-    runs-on: ubuntu-latest
+    # Repo variable CI_RUNS_ON switches to a self-hosted runner, e.g. ["self-hosted","linux"]
+    # (docs/ci-cd.md "Self-hosted runner"); unset = GitHub-hosted.
+    runs-on: ${{ fromJSON(vars.CI_RUNS_ON || '"ubuntu-latest"') }}
+    # The repo is public: never run pull requests from forks (this also protects a self-hosted runner).
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    timeout-minutes: 30
     defaults:
       run:
         working-directory: backend
@@ -16,7 +30,8 @@ jobs:
         with:
           distribution: temurin
           java-version: "21"
-          cache: gradle
+          # GitHub-hosted only: a self-hosted runner keeps ~/.gradle on disk.
+          cache: ${{ vars.CI_RUNS_ON == '' && 'gradle' || '' }}
       - name: Test (Testcontainers starts PostgreSQL via the runner's Docker)
         run: ./gradlew --no-daemon test
       - name: Build jar
@@ -26,3 +41,4 @@ jobs:
         with:
           name: backend-test-reports
           path: backend/build/reports/tests
+          retention-days: 3

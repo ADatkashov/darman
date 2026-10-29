@@ -4,9 +4,27 @@ on:
     paths: ["mobile/**", ".github/workflows/mobile.yml"]
   pull_request:
     paths: ["mobile/**", ".github/workflows/mobile.yml"]
+  workflow_dispatch:
+
+concurrency:
+  group: mobile-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  # pubspec.yaml requires Dart ^3.13.7 / Flutter >=3.47.0. Pinned so CI does not shift under unrelated changes.
+  FLUTTER_VERSION: "3.47.8"
+
 jobs:
   analyze-test:
-    runs-on: ubuntu-latest
+    # Repo variable CI_RUNS_ON switches to a self-hosted runner, e.g. ["self-hosted","linux"]
+    # (docs/ci-cd.md "Self-hosted runner"); unset = GitHub-hosted.
+    runs-on: ${{ fromJSON(vars.CI_RUNS_ON || '"ubuntu-latest"') }}
+    # The repo is public: never run pull requests from forks (this also protects a self-hosted runner).
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    timeout-minutes: 30
     defaults:
       run:
         working-directory: mobile
@@ -14,8 +32,10 @@ jobs:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
         with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: stable
-          cache: true
+          # GitHub-hosted only: a self-hosted runner keeps the SDK on disk.
+          cache: ${{ vars.CI_RUNS_ON == '' }}
       - run: flutter pub get
       - run: flutter gen-l10n
       - run: flutter analyze
