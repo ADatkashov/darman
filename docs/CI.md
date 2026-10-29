@@ -41,3 +41,29 @@ WSL integration для Ubuntu; опционально включить `systemd=
   форков не должен выполняться на вашей машине. Не добавляйте триггеры `pull_request_target`. Дополнительно:
   *Settings → Actions → General → Fork pull request workflows* — «Require approval for all outside collaborators».
 - Если машина выключена, джоб ждёт в очереди.
+
+## Локальная проверка и сборка APK
+
+Скрипты перенесены из проверенной настройки `ADatkashov/zairo` (ветка `develop`) и адаптированы под darman. Работают на
+Ubuntu/WSL2 и не требуют GitHub Actions.
+
+| Скрипт | Что делает |
+|---|---|
+| `scripts/setup-local-dev-wsl.sh` | ставит JDK 21 и Flutter той версии, что закреплена в `mobile.yml` (3.47.8) |
+| `scripts/verify-local.sh [flutter\|backend]` | то же, что CI: `gen-l10n`, `analyze`, `test` для `mobile/`, тесты и `bootJar` для `backend/` (нужен Docker или `DARMAN_TEST_DB_URL`) |
+| `scripts/install-git-hooks.sh` | включает `pre-push`: перед пушем запускает `verify-local.sh` для затронутой части (`SKIP_VERIFY=1 git push` — пропустить один раз) |
+| `scripts/test-pre-push.sh` | проверяет классификацию файлов в хуке |
+| `scripts/setup-android-sdk-wsl.sh` | ставит Android SDK (command-line tools) |
+| `scripts/setup-release-signing.sh` | один раз создаёт ключ подписи в `~/.darman-signing/` (вне репозитория) и `mobile/android/key.properties` (в `.gitignore`) |
+| `scripts/build-apk-local.sh` | собирает `build-apk-out/darman-release-signed.apk` (или `-debug-signed.apk`, если ключа нет); под WSL копирует APK в `Documents\darman-apk` |
+
+Порядок для APK: `setup-local-dev-wsl.sh` → `setup-android-sdk-wsl.sh` → (по желанию) `setup-release-signing.sh` →
+`API_BASE_URL=https://<ваш-сервис>.onrender.com scripts/build-apk-local.sh`. Адрес по умолчанию —
+`https://darman-backend.onrender.com` (имя сервиса из `render.yaml`); если Render выдал другой, задайте `API_BASE_URL`.
+
+**Ключ подписи** обязательно сохраните в надёжном месте вне компьютера (менеджер паролей или зашифрованный диск) и никогда
+не коммитьте: без него обновления не установятся поверх старой версии, а Play Store привязывает приложение к ключу навсегда.
+
+В `mobile/android/app/build.gradle.kts` перенесены две вещи из zairo: `compileSdk = 37` (его требует
+`flutter_secure_storage` 11.x, с меньшим значением сборка APK падает) и подпись релиза через `key.properties` (без файла
+остаётся подпись debug-ключом, как раньше). Сборка APK в облачной среде не проверялась: оттуда недоступен `dl.google.com`.
