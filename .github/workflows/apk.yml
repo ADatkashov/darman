@@ -1,0 +1,44 @@
+name: Build APK
+
+# Собирает installable APK на self-hosted раннере (docs/CI.md "Сборка APK на раннере").
+# Запуск вручную: Actions -> Build APK -> Run workflow. APK подписан debug-ключом
+# (ключ релиза лежит у владельца вне репозитория, см. scripts/setup-release-signing.sh).
+on:
+  workflow_dispatch:
+    inputs:
+      api_base_url:
+        description: "Адрес бэкенда (API_BASE_URL)"
+        required: false
+        default: "https://darman-backend.onrender.com"
+
+permissions:
+  contents: read
+
+jobs:
+  apk:
+    runs-on: [self-hosted, linux]
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: mobile
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.47.8"
+          channel: stable
+          cache: false
+      # Ставит Android SDK, если его нет на раннере (compileSdk 37 — см. mobile/android/app/build.gradle.kts).
+      - uses: android-actions/setup-android@v3
+      - run: flutter pub get
+      - run: flutter gen-l10n
+      - run: flutter build apk --release --dart-define=API_BASE_URL="${{ inputs.api_base_url }}"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: darman-apk
+          path: mobile/build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 7
