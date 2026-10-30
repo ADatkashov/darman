@@ -2,6 +2,7 @@
 
 Workflows: [`backend.yml`](../.github/workflows/backend.yml) — тесты бэкенда на PostgreSQL + `bootJar`;
 [`mobile.yml`](../.github/workflows/mobile.yml) — `flutter gen-l10n`, `analyze`, `test`;
+[`apk.yml`](../.github/workflows/apk.yml) — сборка APK вручную на self-hosted раннере;
 [`runner-smoke.yml`](../.github/workflows/runner-smoke.yml) — проверка self-hosted раннера.
 Запуск CI: `push` и `pull_request` по путям `backend/**` / `mobile/**` (для PR — только из этого же репозитория,
 форки на раннер не пускаются). Кнопки «Run workflow» у CI нет: упавший прогон перезапускается через *Re-run jobs*.
@@ -67,3 +68,10 @@ Ubuntu/WSL2 и не требуют GitHub Actions.
 В `mobile/android/app/build.gradle.kts` перенесены две вещи из zairo: `compileSdk = 37` (его требует
 `flutter_secure_storage` 11.x, с меньшим значением сборка APK падает) и подпись релиза через `key.properties` (без файла
 остаётся подпись debug-ключом, как раньше). Сборка APK в облачной среде не проверялась: оттуда недоступен `dl.google.com`.
+
+## Сборка APK на раннере
+
+*Actions → Build APK → Run workflow* (при необходимости укажите `api_base_url`). Через ~10–20 минут в прогоне появится
+артефакт `darman-apk` (`app-release.apk`, хранится 7 дней) — скачайте и установите на телефон. APK подписан debug-ключом;
+подписанный релизным ключом собирается локально (`scripts/build-apk-local.sh`), ключ в GitHub не загружается.
+Workflow не проверялся в облачной среде (нет доступа к `dl.google.com`); первый запуск на вашей машине — проверка.
