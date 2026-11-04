@@ -11,9 +11,8 @@ concurrency:
 
 jobs:
   test:
-    # Repo variable CI_RUNS_ON switches to a self-hosted runner, e.g. ["self-hosted","linux"]
-    # (docs/CI.md "Self-hosted runner"); unset = GitHub-hosted.
-    runs-on: ${{ fromJSON(vars.CI_RUNS_ON || '"ubuntu-latest"') }}
+    # GitHub-hosted runner (self-hosted CI is switched off; see docs/CI.md).
+    runs-on: ubuntu-latest
     # Never run fork code on a self-hosted runner.
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     services:
@@ -37,8 +36,7 @@ jobs:
         with:
           distribution: temurin
           java-version: "21"
-          # Self-hosted runners keep ~/.gradle on disk; skip the cloud cache (Actions storage quota).
-          cache: ${{ vars.CI_RUNS_ON == '' && 'gradle' || '' }}
+          cache: gradle
       # Integration tests use this database instead of starting Testcontainers (IntegrationTest.java).
       - name: Test
         env:
