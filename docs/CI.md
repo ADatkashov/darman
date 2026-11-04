@@ -7,7 +7,13 @@ Workflows: [`backend.yml`](../.github/workflows/backend.yml) — тесты бэ
 Запуск CI: `push` и `pull_request` по путям `backend/**` / `mobile/**` (для PR — только из этого же репозитория,
 форки на раннер не пускаются). Кнопки «Run workflow» у CI нет: упавший прогон перезапускается через *Re-run jobs*.
 
-## Self-hosted runner
+## Раннер: GitHub-hosted (по умолчанию)
+
+`backend.yml` и `mobile.yml` жёстко используют `ubuntu-latest`; переменная `CI_RUNS_ON` на них больше не влияет.
+`apk.yml` и `runner-smoke.yml` по-прежнему идут на self-hosted раннере. Чтобы вернуть CI на self-hosted, замените
+`runs-on` в двух workflow на `[self-hosted, linux]`.
+
+## Self-hosted runner (устарело для CI, нужно для APK)
 
 GitHub-hosted раннеры требуют Actions-минуты/биллинг (если их нет — джобы падают за секунды без шагов, `runner_id = 0`).
 Self-hosted раннер на своей машине их не расходует. Раннер выбирается переменной репозитория `CI_RUNS_ON`

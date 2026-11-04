@@ -11,9 +11,8 @@ concurrency:
 
 jobs:
   analyze-test:
-    # Repo variable CI_RUNS_ON switches to a self-hosted runner, e.g. ["self-hosted","linux"]
-    # (docs/CI.md "Self-hosted runner"); unset = GitHub-hosted.
-    runs-on: ${{ fromJSON(vars.CI_RUNS_ON || '"ubuntu-latest"') }}
+    # GitHub-hosted runner (self-hosted CI is switched off; see docs/CI.md).
+    runs-on: ubuntu-latest
     # Never run fork code on a self-hosted runner.
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     defaults:
@@ -25,8 +24,7 @@ jobs:
         with:
           flutter-version: "3.47.8"
           channel: stable
-          # Self-hosted runners keep the SDK on disk; skip the cloud cache (Actions storage quota).
-          cache: ${{ vars.CI_RUNS_ON == '' }}
+          cache: true
       - run: flutter pub get
       - run: flutter gen-l10n
       - run: flutter analyze
