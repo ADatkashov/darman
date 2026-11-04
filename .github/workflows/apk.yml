@@ -1,22 +1,42 @@
 name: Build APK
 
-# Собирает installable APK на self-hosted раннере (docs/CI.md "Сборка APK на раннере").
-# Запуск вручную: Actions -> Build APK -> Run workflow. APK подписан debug-ключом
-# (ключ релиза лежит у владельца вне репозитория, см. scripts/setup-release-signing.sh).
+# CI/CD для Android по образцу zairo (android-release.yml + build-artifacts.yml), на GitHub-hosted раннере.
+#  - push в main (изменения в mobile/**): собирается APK и кладётся в артефакты прогона (14 дней);
+#  - ручной запуск (Actions -> Build APK -> Run workflow): то же + AAB, а при release=true — GitHub Release
+#    с постоянной ссылкой на APK/AAB (открывается прямо с телефона, не истекает).
+# Подпись: если заданы секреты ANDROID_KEYSTORE_BASE64, ANDROID_KEYSTORE_PASSWORD, ANDROID_KEY_ALIAS,
+# ANDROID_KEY_PASSWORD — релизная; иначе debug-ключ (см. mobile/android/app/build.gradle.kts). Подробности: docs/CI.md.
 on:
+  push:
+    branches: [main]
+    paths: ["mobile/**", ".github/workflows/apk.yml"]
   workflow_dispatch:
     inputs:
       api_base_url:
         description: "Адрес бэкенда (API_BASE_URL)"
         required: false
         default: "https://darman-backend.onrender.com"
+      release:
+        description: "Опубликовать GitHub Release с APK/AAB (нужна релизная подпись)"
+        required: false
+        type: boolean
+        default: false
 
+concurrency:
+  group: apk-${{ github.ref }}
+  cancel-in-progress: true
+
+# contents: write нужен только для публикации Release; остальные workflow остаются на contents: read.
 permissions:
-  contents: read
+  contents: write
+
+env:
+  FLUTTER_VERSION: "3.47.8"
+  API_BASE_URL: ${{ inputs.api_base_url || 'https://darman-backend.onrender.com' }}
 
 jobs:
   apk:
-    runs-on: [self-hosted, linux]
+    runs-on: ubuntu-latest
     timeout-minutes: 45
     defaults:
       run:
@@ -29,16 +49,94 @@ jobs:
           java-version: "21"
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.47.8"
+          flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: stable
-          cache: false
-      # Ставит Android SDK, если его нет на раннере (compileSdk 37 — см. mobile/android/app/build.gradle.kts).
+          cache: true
+      # compileSdk 37 (mobile/android/app/build.gradle.kts); на ubuntu-latest SDK уже есть, шаг докачивает недостающее.
       - uses: android-actions/setup-android@v3
+
+      - name: Проверить секреты подписи
+        id: signing
+        env:
+          KEYSTORE_B64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          STORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          if [ -n "$KEYSTORE_B64" ] && [ -n "$STORE_PASSWORD" ] && [ -n "$KEY_ALIAS" ] && [ -n "$KEY_PASSWORD" ]; then
+            echo "release=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "release=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Секреты подписи не заданы: APK будет подписан debug-ключом."
+            if [ "${{ inputs.release }}" = "true" ]; then
+              echo "::error::release=true требует секреты ANDROID_KEYSTORE_BASE64, ANDROID_KEYSTORE_PASSWORD, ANDROID_KEY_ALIAS, ANDROID_KEY_PASSWORD (docs/CI.md)."
+              exit 1
+            fi
+          fi
+
+      # Keystore раскладывается во временную папку вне репозитория и удаляется в конце (шаг с if: always()).
+      - name: Подготовить релизную подпись
+        if: steps.signing.outputs.release == 'true'
+        env:
+          KEYSTORE_B64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          STORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/keystore"
+          echo "$KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/keystore/release.jks"
+          cat > android/key.properties <<PROPS
+          storeFile=$RUNNER_TEMP/keystore/release.jks
+          storePassword=$STORE_PASSWORD
+          keyAlias=$KEY_ALIAS
+          keyPassword=$KEY_PASSWORD
+          PROPS
+
+      - id: version
+        run: |
+          echo "name=$(grep '^version:' pubspec.yaml | sed 's/version: *//' | cut -d'+' -f1 | tr -d '[:space:]')" >> "$GITHUB_OUTPUT"
+
       - run: flutter pub get
       - run: flutter gen-l10n
-      - run: flutter build apk --release --dart-define=API_BASE_URL="${{ inputs.api_base_url }}"
+      - run: flutter build apk --release --dart-define=API_BASE_URL="$API_BASE_URL"
+      - name: Собрать AAB (для Google Play)
+        if: steps.signing.outputs.release == 'true'
+        run: flutter build appbundle --release --dart-define=API_BASE_URL="$API_BASE_URL"
+
+      - name: Переименовать результаты
+        run: |
+          suffix="${{ steps.version.outputs.name }}-${{ github.run_number }}"
+          kind="${{ steps.signing.outputs.release == 'true' && 'release' || 'debug-signed' }}"
+          mkdir -p ../release-out
+          cp build/app/outputs/flutter-apk/app-release.apk "../release-out/darman-$suffix-$kind.apk"
+          if [ -f build/app/outputs/bundle/release/app-release.aab ]; then
+            cp build/app/outputs/bundle/release/app-release.aab "../release-out/darman-$suffix.aab"
+          fi
+
       - uses: actions/upload-artifact@v4
         with:
           name: darman-apk
-          path: mobile/build/app/outputs/flutter-apk/app-release.apk
-          retention-days: 7
+          path: release-out/*
+          retention-days: 14
+
+      # Постоянная ссылка для скачивания (в отличие от артефакта прогона не истекает и не zip).
+      - name: Опубликовать GitHub Release
+        if: inputs.release && steps.signing.outputs.release == 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.version.outputs.name }}-${{ github.run_number }}
+          name: "DARMAN v${{ steps.version.outputs.name }} (build ${{ github.run_number }})"
+          target_commitish: ${{ github.sha }}
+          files: release-out/*
+          body: |
+            Сборка из коммита `${{ github.sha }}`, подписана релизным ключом.
+
+            - **APK** — установить напрямую на Android-устройство.
+            - **AAB** — загрузить в Google Play Console.
+            - **Бэкенд:** `${{ env.API_BASE_URL }}`
+
+      - name: Удалить keystore и key.properties
+        if: always()
+        run: |
+          rm -f android/key.properties
+          rm -rf "$RUNNER_TEMP/keystore"
