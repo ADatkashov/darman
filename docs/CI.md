@@ -2,7 +2,7 @@
 
 Workflows: [`backend.yml`](../.github/workflows/backend.yml) — тесты бэкенда на PostgreSQL + `bootJar`;
 [`mobile.yml`](../.github/workflows/mobile.yml) — `flutter gen-l10n`, `analyze`, `test`;
-[`apk.yml`](../.github/workflows/apk.yml) — сборка APK вручную на self-hosted раннере;
+[`apk.yml`](../.github/workflows/apk.yml) — сборка APK/AAB на GitHub-hosted раннере (push в `main` и вручную, Release);
 [`runner-smoke.yml`](../.github/workflows/runner-smoke.yml) — проверка self-hosted раннера.
 Запуск CI: `push` и `pull_request` по путям `backend/**` / `mobile/**` (для PR — только из этого же репозитория,
 форки на раннер не пускаются). Кнопки «Run workflow» у CI нет: упавший прогон перезапускается через *Re-run jobs*.
@@ -10,7 +10,7 @@ Workflows: [`backend.yml`](../.github/workflows/backend.yml) — тесты бэ
 ## Раннер: GitHub-hosted (по умолчанию)
 
 `backend.yml` и `mobile.yml` жёстко используют `ubuntu-latest`; переменная `CI_RUNS_ON` на них больше не влияет.
-`apk.yml` и `runner-smoke.yml` по-прежнему идут на self-hosted раннере. Чтобы вернуть CI на self-hosted, замените
+`apk.yml` тоже на `ubuntu-latest`; только `runner-smoke.yml` идёт на self-hosted раннере. Чтобы вернуть CI на self-hosted, замените
 `runs-on` в двух workflow на `[self-hosted, linux]`.
 
 ## Self-hosted runner (устарело для CI, нужно для APK)
@@ -75,9 +75,25 @@ Ubuntu/WSL2 и не требуют GitHub Actions.
 `flutter_secure_storage` 11.x, с меньшим значением сборка APK падает) и подпись релиза через `key.properties` (без файла
 остаётся подпись debug-ключом, как раньше). Сборка APK в облачной среде не проверялась: оттуда недоступен `dl.google.com`.
 
-## Сборка APK на раннере
+## CI/CD APK (по образцу zairo)
 
-*Actions → Build APK → Run workflow* (при необходимости укажите `api_base_url`). Через ~10–20 минут в прогоне появится
-артефакт `darman-apk` (`app-release.apk`, хранится 7 дней) — скачайте и установите на телефон. APK подписан debug-ключом;
-подписанный релизным ключом собирается локально (`scripts/build-apk-local.sh`), ключ в GitHub не загружается.
-Workflow не проверялся в облачной среде (нет доступа к `dl.google.com`); первый запуск на вашей машине — проверка.
+`apk.yml` собирает APK на `ubuntu-latest`:
+
+- **push в `main`** (изменения в `mobile/**`) — APK попадает в артефакт прогона `darman-apk` (14 дней);
+- **Actions → Build APK → Run workflow** — то же + AAB (если есть ключ); `api_base_url` меняет адрес бэкенда;
+  с галочкой **release** публикуется GitHub Release (вкладка *Releases*) с постоянной ссылкой на APK/AAB.
+
+Подпись: без секретов APK подписан debug-ключом (ставится на телефон, но не годится для Google Play). Для релизной
+подписи добавьте в *Settings → Secrets and variables → Actions* четыре секрета:
+
+| Секрет | Значение |
+|---|---|
+| `ANDROID_KEYSTORE_BASE64` | keystore в base64 одной строкой: `base64 -w0 ~/.darman-signing/darman-release-upload.jks` |
+| `ANDROID_KEYSTORE_PASSWORD` | пароль хранилища (`PASSWORD` из `~/.darman-signing/passwords.txt`) |
+| `ANDROID_KEY_ALIAS` | `darman_upload` |
+| `ANDROID_KEY_PASSWORD` | пароль ключа (тот же `PASSWORD`) |
+
+Keystore создаётся `scripts/setup-release-signing.sh`; потеряете его — обновления не встанут поверх уже установленных
+приложений. Workflow создаёт `key.properties` во время сборки и удаляет его в конце. Если `release=true`, а секретов
+нет, прогон падает с понятным сообщением. Workflow не запускался в облачной среде (нет доступа к `dl.google.com`):
+первый прогон на GitHub — проверка.
