@@ -52,8 +52,8 @@ jobs:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: stable
           cache: true
-      # compileSdk 37 (mobile/android/app/build.gradle.kts); на ubuntu-latest SDK уже есть, шаг докачивает недостающее.
-      - uses: android-actions/setup-android@v3
+      # Android SDK уже есть на ubuntu-latest (android-actions/setup-android там падает на `sdkmanager tools`);
+      # платформу compileSdk 37 докачает Gradle.
 
       - name: Проверить секреты подписи
         id: signing
